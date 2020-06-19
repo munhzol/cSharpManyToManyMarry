@@ -1,0 +1,28 @@
+@model Plan
+
+<div class="jumbotron size-5">
+    <h1 class="display-5">Welcome to wedding planner</h1>
+</div>
+
+
+<div class="alert alert-info">
+    <a href="/logout">Logout</a>
+</div>
+
+<h1>
+    @Model.Wedder1 and @Model.Wedder2 's  Wedding Plan
+</h1>
+
+<h4>
+    Date: @Model.Date, Address: @Model.Address
+</h4>
+
+Guests
+
+<ul>
+    @foreach (var g in @Model.Guests)
+    {
+        <li>@g.Guest.FirstName @g.Guest.LastName</li>
+    }
+</ul>
+

@@ -1,0 +1,50 @@
+@model List<Plan>
+
+<div class="jumbotron size-5">
+    <h1 class="display-5">Welcome to wedding planner</h1>
+</div>
+
+
+<div class="alert alert-info">
+    <a href="/logout">Logout</a>
+</div>
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Wedding</th>
+        <th>Date</th>
+        <th>Guest</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (Plan p in @Model)
+    {
+        <tr>
+            <td><a href="/wedding/@p.PlanID">@p.Wedder1 @p.Wedder2</a></td>
+            <td>@p.Date</td>
+            <td>@p.Guests.Count</td>
+            <td>
+                @if(ViewBag.Uid == p.Organizer.UserID)
+                    {
+                        <a class="btn btn-warning btn-sm" href="/plan/@p.PlanID/delete">Cancel</a>
+                    }
+                    else
+                    {
+                        @* Query to see if they are watching *@
+                        if(p.Guests.Any( w => w.UserID == ViewBag.Uid)) {
+                            <a class="btn btn-outline-dark btn-sm" asp-action="TogglePlan" asp-route-planId="@p.PlanID" asp-route-status="leave">UnRSVP</a>
+                        } else {
+                            <a class="btn btn-outline-success btn-sm" asp-action="TogglePlan" asp-route-planId="@p.PlanID" asp-route-status="join">RSVP</a>
+                        }
+
+                    }
+            </td>
+        </tr>
+    }
+</table>
+
+
+<p>
+    <a href="/wedding/add">New Wedding</a>
+</p>
